@@ -1,64 +1,39 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personagem Anime Seguind Mouse</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #222;
-        }
-        canvas {
-            display: block;
-        }
-    </style>
-</head>
-<body>
-    <canvas id="gameCanvas"></canvas>
-    
-    <script>
-        // Configuração do Canvas
-        const canvas = document.getElementById("gameCanvas");
-        const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
-        // Carregar imagem do personagem
-        const personagem = new Image();
-        personagem.src = "https://i.imgur.com/6n0PY9M.png"; // URL da imagem do personagem
+const character = {
+  name: "Kaori Mitsuki",
+  age: 19,
+  abilities: ["Espadachim ágil", "Controle de vento", "Salto triplo"],
+  description:
+    "Kaori é uma guerreira habilidosa que luta com sua lâmina encantada pelo vento, capaz de desferir golpes letais com velocidade impressionante.",
+  image: "https://via.placeholder.com/150",
+};
 
-        // Posição do personagem
-        let personagemX = canvas.width / 2;
-        let personagemY = canvas.height / 2;
-        let mouseX = personagemX;
-        let mouseY = personagemY;
-
-        // Atualiza a posição do mouse
-        window.addEventListener("mousemove", (event) => {
-            mouseX = event.clientX;
-            mouseY = event.clientY;
-        });
-
-        // Função de animação
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Movimento suave em direção ao mouse
-            personagemX += (mouseX - personagemX) * 0.05;
-            personagemY += (mouseY - personagemY) * 0.05;
-
-            // Desenhar personagem
-            ctx.drawImage(personagem, personagemX - 50, personagemY - 50, 100, 100);
-
-            requestAnimationFrame(animate);
-        }
-
-        // Iniciar animação quando a imagem carregar
-        personagem.onload = () => {
-            animate();
-        };
-    </script>
-</body>
-</html>
+export default function AnimeCharacter() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="flex justify-center items-center h-screen"
+    >
+      <Card className="w-80 p-4 bg-white shadow-xl rounded-2xl">
+        <img src={character.image} alt={character.name} className="w-full rounded-lg" />
+        <CardContent className="text-center mt-4">
+          <h2 className="text-xl font-bold">{character.name}</h2>
+          <p className="text-gray-600">Idade: {character.age}</p>
+          <p className="text-gray-800 mt-2">{character.description}</p>
+          <ul className="mt-2">
+            {character.abilities.map((ability, index) => (
+              <li key={index} className="text-sm text-gray-700">- {ability}</li>
+            ))}
+          </ul>
+          <Button className="mt-4 w-full">Ver mais</Button>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+}
