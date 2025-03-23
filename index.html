@@ -1,116 +1,64 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus objetivos do ano</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Personagem Anime Seguind Mouse</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #222;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
 </head>
-
 <body>
-    <section class="conteudo-principal">
-        <h2 class="titulo-principal">Meus objetivos do ano<span>_</span></h2>
-        <div class="conteudo">
-            <div class="botoes">
-                <button class="botao ativo">Cursos na Alura</button>
-                <button class="botao">Criar projetos em Javascript</button>
-                <button class="botao">Criar um portfolio</button>
-                <button class="botao">Atualizar meu currículo</button>
-            </div>
-            <div class="abas-textos">
-                <div class="aba-conteudo ativo">
-                    <h3 class="aba-conteudo-titulo-principal">Estudar 4 cursos na Alura</h3>
-                    <h4 class="aba-conteudo-titulo-secundario">Tempo para completar o objetivo</h4>
-                    <div class="contador">
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="dias0"></p>
-                            <p class="contador-digito-texto">dias</10>
-                        </div>
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="horas0"></p>
-                            <p class="contador-digito-texto">horas</18>
-                        </div>
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="min0"></p>
-                            <p class="contador-digito-texto">min</04>
-                        </div>
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="seg0"></p>
-                            <p class="contador-digito-texto">seg</13>
-                        </div>
-                    </div>
-                </div>
-                <div class="aba-conteudo">
-                    <h3 class="aba-conteudo-titulo-principal">Criar 5 projetos em Javascript</h3>
-                    <h4 class="aba-conteudo-titulo-secundario">Tempo para completar o objetivo</h4>
-                    <div class="contador">
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="dias1"></p>
-                            <p class="contador-digito-texto">dias</10>
-                        </div>
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="horas1"></p>
-                            <p class="contador-digito-texto">horas</18>
-                        </div>
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="min1"></p>
-                            <p class="contador-digito-texto">min</04>
-                        </div>
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="seg1"></p>
-                            <p class="contador-digito-texto">seg</13>
-                        </div>
-                    </div>
-                </div>
-                <div class="aba-conteudo">
-                    <h3 class="aba-conteudo-titulo-principal">Criar um portfolio com os meus 3 melhores projetos</h3>
-                    <h4 class="aba-conteudo-titulo-secundario">Tempo para completar o objetivo</h4>
-                    <div class="contador">
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="dias2"></p>
-                            <p class="contador-digito-texto">dias</10>
-                        </div>
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="horas2"></p>
-                            <p class="contador-digito-texto">horas</18>
-                        </div>
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="min2"></p>
-                            <p class="contador-digito-texto">min</04>
-                        </div>
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="seg2"></p>
-                            <p class="contador-digito-texto">seg</13>
-                        </div>
-                    </div>
-                </div>
-                <div class="aba-conteudo">
-                    <h3 class="aba-conteudo-titulo-principal">Atualizar meu curriculo com os certificados da Alura</h3>
-                    <h4 class="aba-conteudo-titulo-secundario">Tempo para completar o objetivo</h4>
-                    <div class="contador">
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="dias3"></p>
-                            <p class="contador-digito-texto">dias</10>
-                        </div>
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="horas3"></p>
-                            <p class="contador-digito-texto">horas</18>
-                        </div>
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="min3"></p>
-                            <p class="contador-digito-texto">min</04>
-                        </div>
-                        <div class="contador-digito">
-                            <p class="contador-digito-numero" id="seg3"></p>
-                            <p class="contador-digito-texto">seg</13>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <script src="main.js"></script>
-</body>
+    <canvas id="gameCanvas"></canvas>
+    
+    <script>
+        // Configuração do Canvas
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
+        // Carregar imagem do personagem
+        const personagem = new Image();
+        personagem.src = "https://i.imgur.com/6n0PY9M.png"; // URL da imagem do personagem
+
+        // Posição do personagem
+        let personagemX = canvas.width / 2;
+        let personagemY = canvas.height / 2;
+        let mouseX = personagemX;
+        let mouseY = personagemY;
+
+        // Atualiza a posição do mouse
+        window.addEventListener("mousemove", (event) => {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+        });
+
+        // Função de animação
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Movimento suave em direção ao mouse
+            personagemX += (mouseX - personagemX) * 0.05;
+            personagemY += (mouseY - personagemY) * 0.05;
+
+            // Desenhar personagem
+            ctx.drawImage(personagem, personagemX - 50, personagemY - 50, 100, 100);
+
+            requestAnimationFrame(animate);
+        }
+
+        // Iniciar animação quando a imagem carregar
+        personagem.onload = () => {
+            animate();
+        };
+    </script>
+</body>
 </html>
